@@ -29,6 +29,9 @@ open class PieChartView: PieRadarChartViewBase
     /// flag indicating if entry labels should be drawn or not
     private var _drawEntryLabelsEnabled = true
     
+    /// flag indicating if entry data should be drawn or not
+    private var _drawEntryDataEnabled = false
+    
     /// array that holds the width of each pie-slice in degrees
     private var _drawAngles = [CGFloat]()
     
@@ -364,7 +367,7 @@ open class PieChartView: PieRadarChartViewBase
     }
     
     /// The color for the hole that is drawn in the center of the PieChart (if enabled).
-    /// 
+    ///
     /// - Note: Use holeTransparent with holeColor = nil to make the hole transparent.*
     @objc open var holeColor: NSUIColor?
     {
@@ -534,7 +537,7 @@ open class PieChartView: PieRadarChartViewBase
     }
     
     /// the radius of the hole in the center of the piechart in percent of the maximum radius (max = the radius of the whole chart)
-    /// 
+    ///
     /// **default**: 0.5 (50%) (half the pie)
     @objc open var holeRadiusPercent: CGFloat
     {
@@ -566,7 +569,7 @@ open class PieChartView: PieRadarChartViewBase
     }
     
     /// the radius of the transparent circle that is drawn next to the hole in the piechart in percent of the maximum radius (max = the radius of the whole chart)
-    /// 
+    ///
     /// **default**: 0.55 (55%) -> means 5% larger than the center-hole by default
     @objc open var transparentCircleRadiusPercent: CGFloat
     {
@@ -623,6 +626,27 @@ open class PieChartView: PieRadarChartViewBase
         get
         {
             return drawEntryLabelsEnabled
+        }
+    }
+    
+    @objc open var drawEntryDataEnabled: Bool
+    {
+        get
+        {
+            return _drawEntryDataEnabled
+        }
+        set
+        {
+            _drawEntryDataEnabled = newValue
+            setNeedsDisplay()
+        }
+    }
+    
+    @objc open var isDrawEntryDataEnabled: Bool
+    {
+        get
+        {
+            return drawEntryDataEnabled
         }
     }
     
@@ -688,3 +712,4 @@ open class PieChartView: PieRadarChartViewBase
         }
     }
 }
+

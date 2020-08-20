@@ -327,6 +327,7 @@ open class PieChartRenderer: DataRenderer
 
         let drawEntryLabels = chart.isDrawEntryLabelsEnabled
         let usePercentValuesEnabled = chart.usePercentValuesEnabled
+        let drawEntryData = chart.isDrawEntryDataEnabled
 
         var angle: CGFloat = 0.0
         var xIndex = 0
@@ -549,17 +550,33 @@ open class PieChartRenderer: DataRenderer
                     }
                     else if drawXInside
                     {
-                        if j < data.entryCount && pe?.label != nil
-                        {
-                            ChartUtils.drawText(
-                                context: context,
-                                text: pe!.label!,
-                                point: CGPoint(x: x, y: y + lineHeight / 2.0),
-                                align: .center,
-                                attributes: [
-                                    NSAttributedString.Key.font: entryLabelFont ?? valueFont,
-                                    NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
-                            )
+                        if drawEntryData == true{
+                            if j < data.entryCount && pe?.data != nil
+                           {
+                               ChartUtils.drawText(
+                                   context: context,
+                                   text: pe!.data! as! String,
+                                   point: CGPoint(x: x, y: y + lineHeight / 2.0),
+                                   align: .center,
+                                   attributes: [
+                                       NSAttributedString.Key.font: entryLabelFont ?? valueFont,
+                                       NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
+                               )
+                           }
+                        }
+                        else{
+                            if j < data.entryCount && pe?.label != nil
+                            {
+                                ChartUtils.drawText(
+                                    context: context,
+                                    text: pe!.label!,
+                                    point: CGPoint(x: x, y: y + lineHeight / 2.0),
+                                    align: .center,
+                                    attributes: [
+                                        NSAttributedString.Key.font: entryLabelFont ?? valueFont,
+                                        NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
+                                )
+                            }
                         }
                     }
                     else if drawYInside
@@ -939,3 +956,4 @@ open class PieChartRenderer: DataRenderer
         return element
     }
 }
+
