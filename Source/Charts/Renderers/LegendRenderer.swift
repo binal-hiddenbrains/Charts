@@ -99,17 +99,20 @@ open class LegendRenderer: Renderer
                     
                     for j in 0..<min(clrs.count, entryCount)
                     {
-                        entries.append(
-                            LegendEntry(
-                                label: (pds.entryForIndex(j) as? PieChartDataEntry)?.label,
-                                form: dataSet.form,
-                                formSize: dataSet.formSize,
-                                formLineWidth: dataSet.formLineWidth,
-                                formLineDashPhase: dataSet.formLineDashPhase,
-                                formLineDashLengths: dataSet.formLineDashLengths,
-                                formColor: clrs[j]
+                        let dataSetNew = pds.entryForIndex(j) as? PieChartDataEntry
+                        if dataSetNew?.label?.isEmpty == false{
+                            entries.append(
+                                LegendEntry(
+                                    label: dataSetNew?.label,
+                                    form: dataSet.form,
+                                    formSize: dataSet.formSize,
+                                    formLineWidth: dataSet.formLineWidth,
+                                    formLineDashPhase: dataSet.formLineDashPhase,
+                                    formLineDashLengths: dataSet.formLineDashLengths,
+                                    formColor: clrs[j]
+                                )
                             )
-                        )
+                        }
                     }
                     
                     if dataSet.label != nil
