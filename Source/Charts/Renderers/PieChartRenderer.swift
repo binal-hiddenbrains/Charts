@@ -465,8 +465,14 @@ open class PieChartRenderer: DataRenderer
                         context.move(to: CGPoint(x: pt0.x, y: pt0.y))
                         context.addLine(to: CGPoint(x: pt1.x, y: pt1.y))
                         context.addLine(to: CGPoint(x: pt2.x, y: pt2.y))
-
-                        context.drawPath(using: CGPathDrawingMode.stroke)
+						if drawEntryData == true{
+							if let data = pe?.data as? String, data.isEmpty == false{
+								context.drawPath(using: CGPathDrawingMode.stroke)
+							}
+						}
+						else{
+							context.drawPath(using: CGPathDrawingMode.stroke)
+						}
                     }
                     
                     if drawXOutside && drawYOutside
@@ -494,18 +500,34 @@ open class PieChartRenderer: DataRenderer
                     }
                     else if drawXOutside
                     {
-                        if j < data.entryCount && pe?.label != nil
-                        {
-                            ChartUtils.drawText(
-                                context: context,
-                                text: pe!.label!,
-                                point: CGPoint(x: labelPoint.x, y: labelPoint.y + lineHeight / 2.0),
-                                align: align,
-                                attributes: [
-                                    NSAttributedString.Key.font: entryLabelFont ?? valueFont,
-                                    NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
-                            )
-                        }
+						if drawEntryData == true{
+							if j < data.entryCount && pe?.data != nil
+							{
+								ChartUtils.drawText(
+									context: context,
+									text: pe!.data! as! String,
+									point: CGPoint(x: labelPoint.x, y: labelPoint.y + lineHeight / 2.0),
+									align: align,
+									attributes: [
+										NSAttributedString.Key.font: entryLabelFont ?? valueFont,
+										NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
+								)
+							}
+						}
+						else{
+							if j < data.entryCount && pe?.label != nil
+							{
+								ChartUtils.drawText(
+									context: context,
+									text: pe!.label!,
+									point: CGPoint(x: labelPoint.x, y: labelPoint.y + lineHeight / 2.0),
+									align: align,
+									attributes: [
+										NSAttributedString.Key.font: entryLabelFont ?? valueFont,
+										NSAttributedString.Key.foregroundColor: entryLabelColor ?? valueTextColor]
+								)
+							}
+						}
                     }
                     else if drawYOutside
                     {
